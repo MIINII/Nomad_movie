@@ -20,7 +20,7 @@ const CoinTracker = () => {
       <select>
         {coins.map(coin => (
           <option>
-            {coin.name} ({coin.system}) : ${coin.quotes.USD.price} USD
+        {coin.name} ({coin.system}) : ${coin.quotes.USD.price} USD
           </option>
         ))}
       </select>
