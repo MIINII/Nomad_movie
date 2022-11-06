@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import './App.css';
 import GalConverter from './prac/GalConverter';
-import TimeConverter from './components/TimeConverter';
+
 import Todo from './prac/Todo';
+import CoinTracker from './prac/CoinTracker';
 
 function App() {
   return (
     <div className='App'>
-      <Todo />
+      {/* <Todo /> */}
+      <CoinTracker />
     </div>
   );
 }
