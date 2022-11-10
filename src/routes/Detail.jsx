@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Movie from '../components/Movie';
 
 const Detail = () => {
@@ -11,10 +12,9 @@ const Detail = () => {
 
   const getMovie = useCallback(async () => {
     const json = await (await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)).json();
-    console.log('🚀 ⁝ getMovie ⁝ json', json);
     setMovies(json.data.movie);
     setLoading(false);
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     getMovie();
@@ -22,25 +22,26 @@ const Detail = () => {
 
   return (
     <>
-      <h1>무비 {loading ? '' : `(${movies.length})`}</h1>
-      {loading ? (
-        <strong>로딩중!</strong>
-      ) : (
-        <div>
-          {movies.map(movie => (
-            <Movie
-              key={movie.id}
-              id={movie.id}
-              coverImg={movie.medium_cover_image}
-              title={movie.title}
-              summary={movie.summary}
-              genres={movie.genres}
-            />
-          ))}
-        </div>
-      )}
+      <h1>{movies.title}</h1>
+      <div>
+        <Movie
+          key={movies.id}
+          id={movies.id}
+          coverImg={movies.medium_cover_image}
+          summary={movies.summary}
+          genres={movies.genres}
+        />
+      </div>
     </>
   );
+};
+
+Movie.propTypes = {
+  id: PropTypes.number.isRequired,
+  coverImg: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  summary: PropTypes.string.isRequired,
+  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Detail;

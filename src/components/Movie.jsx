@@ -8,14 +8,10 @@ const Movie = ({ id, coverImg, title, summary, genres }) => {
     <div>
       <img src={coverImg} alt={title} />
       <h2>
-        <Link to={`/movie/${id}`}>{title}</Link>
+        <Link to={`movie/${id}`}>{title}</Link>
       </h2>
       <p>{summary}</p>
-      <ul>
-        {genres.map(genre => (
-          <li key={genre}>{genre}</li>
-        ))}
-      </ul>
+      <ul>{genres ? genres.map : null}</ul>
     </div>
   );
 };
