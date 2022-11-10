@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Movie from '../components/Movie';
 
@@ -9,19 +9,36 @@ const Detail = () => {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
 
-  const getMovie = async () => {
+  const getMovie = useCallback(async () => {
     const json = await (await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)).json();
-    setMovies(json.data.movies);
+    console.log('🚀 ⁝ getMovie ⁝ json', json);
+    setMovies(json.data.movie);
     setLoading(false);
-  };
+  }, [id]);
 
   useEffect(() => {
     getMovie();
-  }, []);
+  }, [getMovie]);
 
   return (
     <>
-      <Movie coverImg={movies.medium_cover_image} title={movies.title} summary={movies.summary} genres={movies.genres} />
+      <h1>무비 {loading ? '' : `(${movies.length})`}</h1>
+      {loading ? (
+        <strong>로딩중!</strong>
+      ) : (
+        <div>
+          {movies.map(movie => (
+            <Movie
+              key={movie.id}
+              id={movie.id}
+              coverImg={movie.medium_cover_image}
+              title={movie.title}
+              summary={movie.summary}
+              genres={movie.genres}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 };

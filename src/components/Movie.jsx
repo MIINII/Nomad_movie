@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const Movie = ({ id, coverImg, title, summary, genres }) => {
+  console.log('🚀 ⁝ Movie ⁝ id', id);
   return (
     <div>
       <img src={coverImg} alt={title} />
